@@ -16,16 +16,27 @@ namespace my_unique_ptr
 			delete _ptr;
 		}
 
-		Ttype operator*()
+		Ttype& operator*()
 		{
-			return *_ptr;
+			if (_ptr != nullptr)
+			{
+				return *_ptr;
+			}
+		}
+
+		Ttype* operator->() const
+		{
+			return _ptr;
 		}
 
 		Ttype* release()
 		{
-			Ttype* oldptr = _ptr;
-			_ptr = nullptr;
-			return oldptr;
+			if (_ptr != nullptr)
+			{
+				Ttype* oldptr = _ptr;
+				_ptr = nullptr;
+				return oldptr;
+			}
 		}
 
 		unique_ptr& operator=(const unique_ptr& ptr) = delete;
